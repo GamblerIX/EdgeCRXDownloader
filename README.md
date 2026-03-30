@@ -9,7 +9,6 @@
 - 支持选择本地保存目录
 - 实时显示每个任务的下载进度
 - 保留执行日志和最终结果摘要
-- 无需 Python 运行时
 
 ## 技术栈
 
@@ -44,6 +43,13 @@ npm run tauri:dev
 npm run tauri:build
 ```
 
+## GitHub Actions
+
+- `CI.yml`：在 `push` 和 `pull_request` 时执行，校验 Nuxt 静态构建，并在 Windows 上执行 `tauri build -- --no-bundle`。
+- `CD.yml`：在手动触发或推送 `v*` 标签时执行，构建 Windows NSIS 安装包并创建 GitHub Release。
+- 发布建议使用与应用版本一致的标签，例如 `v0.1.0`。
+- 如果 Release 创建失败，请到 GitHub 仓库 `Settings -> Actions -> General` 中确认 `GITHUB_TOKEN` 具备 `Read and write permissions`。
+
 ## 输入格式
 
 每行一个输入，支持两种格式：
@@ -51,10 +57,15 @@ npm run tauri:build
 1. 32 位扩展 ID
 2. Edge 商店详情页 URL
 
-示例：
+真实样例示例：
 
 ```text
+# 篡改猴
 iikmkjmpaadaobahmlepeloendndfphd
+```
+
+```text
+# 篡改猴
 https://microsoftedge.microsoft.com/addons/detail/edge-crx-downloader/iikmkjmpaadaobahmlepeloendndfphd?hl=zh-CN
 ```
 
@@ -81,6 +92,5 @@ EdgeCRXDownloader/
 
 ## 说明
 
-- 本项目不再使用旧版 Python 入口。
 - Tauri 打包图标由 `src-tauri/app-icon.svg` 生成。
 - 首次运行前建议先执行 `npm install` 和 `npm run tauri:icon`。

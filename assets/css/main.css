@@ -1,0 +1,94 @@
+@import "@fontsource/space-grotesk/400.css";
+@import "@fontsource/space-grotesk/500.css";
+@import "@fontsource/space-grotesk/700.css";
+@import "@fontsource/ibm-plex-mono/400.css";
+@import "@fontsource/ibm-plex-mono/500.css";
+
+:root {
+  color-scheme: dark;
+  --bg: #100f0c;
+  --bg-elevated: rgba(31, 28, 23, 0.82);
+  --bg-soft: rgba(47, 42, 33, 0.76);
+  --line: rgba(238, 210, 160, 0.12);
+  --line-strong: rgba(238, 210, 160, 0.25);
+  --text: #f7f0dd;
+  --text-muted: rgba(247, 240, 221, 0.68);
+  --amber: #f2be5c;
+  --amber-strong: #ff9c44;
+  --olive: #8ca16b;
+  --danger: #ff7d7d;
+  --success: #a6d97e;
+  --info: #8cc8ff;
+  --shadow: 0 32px 90px rgba(0, 0, 0, 0.35);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#__nuxt {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  color: var(--text);
+  font-family: "Space Grotesk", "Segoe UI", sans-serif;
+  background:
+    radial-gradient(circle at top left, rgba(255, 156, 68, 0.22), transparent 30%),
+    radial-gradient(circle at top right, rgba(140, 161, 107, 0.18), transparent 26%),
+    linear-gradient(180deg, #1b1812 0%, #100f0c 45%, #0d0c09 100%);
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(circle at center, black 55%, transparent 100%);
+  opacity: 0.35;
+}
+
+a {
+  color: inherit;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+.app-shell {
+  position: relative;
+  width: min(1320px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 28px 0 56px;
+}
+
+.mono {
+  font-family: "IBM Plex Mono", "Cascadia Code", monospace;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.focus-ring:focus-visible {
+  outline: 2px solid rgba(242, 190, 92, 0.8);
+  outline-offset: 3px;
+}
