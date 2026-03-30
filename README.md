@@ -1,108 +1,86 @@
 # Edge CRX Downloader
 
-一个用于从Microsoft Edge扩展商店下载crx文件的Python工具，支持GUI和CLI两种模式。
+一个基于 **Nuxt 4 + Tauri v2 + Rust** 的桌面下载器，用于批量下载 Microsoft Edge 扩展的 CRX 文件。
 
-## 功能特点
+## 功能
 
-- ✅ 支持通过URL或扩展ID下载Edge扩展
-- ✅ GUI模式支持批量下载（单线程逐个处理）
-- ✅ CLI模式支持命令行快速下载
-- ✅ 实时显示下载进度
-- ✅ 零日志系统，错误即时反馈
-- ✅ 单文件Python脚本，易于维护
-- ✅ 可打包为独立exe文件
-
-## 安装依赖
-
-```bash
-pip install -r requirements.txt
-```
-
-## 使用方法
-
-### GUI模式
-
-直接运行脚本启动图形界面：
-
-```bash
-python main.py
-```
-
-或双击运行打包后的exe文件。
-
-**GUI功能：**
-
-- 在文本框中输入扩展URL或ID（每行一个）
-- 选择保存位置
-- 点击"开始下载"按钮
-- 查看实时进度和状态信息
-
-### CLI模式
-
-通过命令行参数直接下载：
-
-```bash
-# 使用扩展ID
-python main.py iikmkjmpaadaobahmlepeloendndfphd
-
-# 使用完整URL
-python main.py --https://microsoftedge.microsoft.com/addons/detail/篡改猴/iikmkjmpaadaobahmlepeloendndfphd?hl=zh-CN
-```
-
-CLI模式会将文件下载到当前工作目录。
-
-## 输入格式
-
-支持两种输入格式：
-
-1. **完整URL**：
-   ```
-   https://microsoftedge.microsoft.com/addons/detail/篡改猴/iikmkjmpaadaobahmlepeloendndfphd?hl=zh-CN
-   ```
-
-2. **扩展ID**（32个小写字母）：
-   ```
-   iikmkjmpaadaobahmlepeloendndfphd
-   ```
-
-## 打包为exe
-
-使用PyInstaller打包为独立可执行文件：
-
-```bash
-# CLI兼容版本（推荐）
-pyinstaller --onefile --name EdgeCRXDownloader main.py
-
-# 纯GUI版本（隐藏控制台）
-pyinstaller --onefile --windowed --name EdgeCRXDownloader main.py
-```
-
-详细打包说明请参考 [打包说明.md](打包说明.md)
-
-## 项目结构
-
-```
-EdgeCRX/
-├── main.py              # 程序
-├── requirements.txt     # Python依赖
-├── README.md           # 项目说明
-```
+- 支持粘贴扩展 ID 或 Edge 商店详情页 URL
+- 支持按行批量下载
+- 支持选择本地保存目录
+- 实时显示每个任务的下载进度
+- 保留执行日志和最终结果摘要
+- 无需 Python 运行时
 
 ## 技术栈
 
-- **GUI框架**：CustomTkinter
-- **HTTP请求**：requests
-- **打包工具**：PyInstaller
-- **Python版本**：3.8+
+- 前端：Nuxt 4
+- 桌面壳：Tauri v2
+- 下载引擎：Rust
+- 进度通信：Tauri `Channel`
 
-## 注意事项
+## 启动方式
 
-1. 下载的crx文件以扩展ID命名，格式为 `{ID}.crx`
-2. GUI模式下可以选择保存位置，会话内记住选择
-3. CLI模式下文件保存到当前工作目录
-4. 批量下载采用单线程逐个处理，失败不影响后续下载
-5. 所有错误即时输出，不创建日志文件
+先安装依赖：
 
-## 贡献
+```bash
+npm install
+```
 
-欢迎提交Issue和Pull Request！
+生成 Tauri 图标资源：
+
+```bash
+npm run tauri:icon
+```
+
+开发模式启动桌面应用：
+
+```bash
+npm run tauri:dev
+```
+
+构建静态前端并打包桌面应用：
+
+```bash
+npm run tauri:build
+```
+
+## 输入格式
+
+每行一个输入，支持两种格式：
+
+1. 32 位扩展 ID
+2. Edge 商店详情页 URL
+
+示例：
+
+```text
+iikmkjmpaadaobahmlepeloendndfphd
+https://microsoftedge.microsoft.com/addons/detail/edge-crx-downloader/iikmkjmpaadaobahmlepeloendndfphd?hl=zh-CN
+```
+
+## 输出行为
+
+- 下载文件会被保存为 `{extensionId}.crx`
+- 如果目标文件已存在，会被覆盖
+- 无效输入会在队列中直接标红，不会阻塞其他条目
+- 失败原因会同步到界面日志和结果面板
+
+## 项目结构
+
+```text
+EdgeCRXDownloader/
+├─ assets/
+├─ pages/
+├─ src-tauri/
+├─ utils/
+├─ app.vue
+├─ nuxt.config.ts
+├─ package.json
+└─ tsconfig.json
+```
+
+## 说明
+
+- 本项目不再使用旧版 Python 入口。
+- Tauri 打包图标由 `src-tauri/app-icon.svg` 生成。
+- 首次运行前建议先执行 `npm install` 和 `npm run tauri:icon`。
