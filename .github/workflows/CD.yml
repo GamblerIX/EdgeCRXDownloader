@@ -49,7 +49,7 @@ jobs:
           tagName: v__VERSION__
           releaseName: Edge CRX Downloader v__VERSION__
           releaseBody: |
-            Windows NSIS installer for Edge CRX Downloader.
-            Download the attached setup executable to install this version.
+            Edge CRX Downloader 的 Windows NSIS 安装包。
+            请下载附件中的安装程序以安装此版本。
           releaseDraft: false
           prerelease: false
