@@ -16,7 +16,7 @@ export default defineNuxtConfig({
     }
   },
   devServer: {
-    host: '0'
+    host: 'localhost'
   },
   vite: {
     clearScreen: false,

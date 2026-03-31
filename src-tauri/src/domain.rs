@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Deserialize)]
+#[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct DownloadInput {
   pub line_number: usize,
@@ -71,7 +71,7 @@ pub enum DownloadEvent {
   },
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug)]
 pub struct DownloadTarget {
   pub line_number: usize,
   pub extension_id: String,

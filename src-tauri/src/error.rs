@@ -1,4 +1,4 @@
-use std::{io, path::PathBuf};
+use std::{io, path::Path};
 
 use thiserror::Error;
 
@@ -22,14 +22,8 @@ pub enum DownloadError {
   Rename(String),
 }
 
-impl From<io::Error> for DownloadError {
-  fn from(error: io::Error) -> Self {
-    Self::FileWrite(error.to_string())
-  }
-}
-
 impl DownloadError {
-  pub fn create_directory(path: &PathBuf, error: io::Error) -> Self {
+  pub fn create_directory(path: &Path, error: io::Error) -> Self {
     Self::CreateDirectory(format!("{} ({})", path.display(), error))
   }
 }

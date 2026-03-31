@@ -14,8 +14,8 @@
       {
         "label": "main",
         "title": "Edge CRX Downloader",
-        "width": 1440,
-        "height": 920,
+        "width": 960,
+        "height": 640,
         "minWidth": 760,
         "minHeight": 640,
         "resizable": true,
