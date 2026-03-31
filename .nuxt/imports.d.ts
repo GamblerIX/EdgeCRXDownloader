@@ -1,0 +1,1 @@
+export declare function useHead(input: unknown): void
