@@ -19,21 +19,31 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  frontend-build:
-    name: Frontend Build
+  version-and-config-checks:
+    name: Version and Config Checks
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: lts/*
+      - name: Setup project
+        uses: ./.github/actions/setup-project
 
-      - name: Install frontend dependencies
-        run: npm install
+      - name: Run configuration tests
+        run: npm test
+
+  frontend-build:
+    name: Frontend Build
+    runs-on: ubuntu-latest
+    needs: version-and-config-checks
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup project
+        uses: ./.github/actions/setup-project
 
       - name: Build Nuxt static output
         run: npm run build
@@ -48,26 +58,16 @@ jobs:
   tauri-windows-build:
     name: Tauri Windows Verify
     runs-on: windows-latest
+    needs: version-and-config-checks
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Setup project
+        uses: ./.github/actions/setup-project
         with:
-          node-version: lts/*
-
-      - name: Install Rust toolchain
-        uses: dtolnay/rust-toolchain@stable
-
-      - name: Restore Rust cache
-        uses: swatinem/rust-cache@v2
-        with:
-          workspaces: ./src-tauri -> target
-
-      - name: Install frontend dependencies
-        run: npm install
+          with-rust: 'true'
 
       - name: Build desktop app without installer bundle
         run: npm run tauri:build -- --no-bundle

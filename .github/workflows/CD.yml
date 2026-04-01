@@ -25,31 +25,37 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Setup project
+        uses: ./.github/actions/setup-project
         with:
-          node-version: lts/*
+          with-rust: 'true'
 
-      - name: Install Rust toolchain
-        uses: dtolnay/rust-toolchain@stable
+      - name: Read package version
+        id: package_version
+        shell: pwsh
+        run: Add-Content -Path $env:GITHUB_OUTPUT -Value "value=$(node scripts/version-tools.mjs print)"
 
-      - name: Restore Rust cache
-        uses: swatinem/rust-cache@v2
-        with:
-          workspaces: ./src-tauri -> target
+      - name: Ensure git tag matches package version
+        if: ${{ github.ref_type == 'tag' }}
+        shell: pwsh
+        run: |
+          $expectedTag = "v${{ steps.package_version.outputs.value }}"
+          if ("${{ github.ref_name }}" -ne $expectedTag) {
+            Write-Error "Git tag ${{ github.ref_name }} does not match package.json version $expectedTag."
+          }
 
-      - name: Install frontend dependencies
-        run: npm install
+      - name: Sync Cargo manifest version
+        run: npm run version:sync
 
       - name: Build and publish Tauri release
         uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tagName: v__VERSION__
-          releaseName: Edge CRX Downloader v__VERSION__
+          tagName: v${{ steps.package_version.outputs.value }}
+          releaseName: Edge CRX Downloader v${{ steps.package_version.outputs.value }}
           releaseBody: |
-            Edge CRX Downloader 的 Windows NSIS 安装包。
-            请下载附件中的安装程序以安装此版本。
+            Windows NSIS installer for Edge CRX Downloader.
+            Download the attached installer to install this release.
           releaseDraft: false
           prerelease: false

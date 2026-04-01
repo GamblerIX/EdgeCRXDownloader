@@ -5,13 +5,19 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "nuxt dev",
+    "test": "node --test",
     "generate": "nuxt generate",
     "build": "nuxt generate",
     "preview": "nuxt preview",
+    "version:print": "node scripts/version-tools.mjs print",
+    "version:sync": "node scripts/version-tools.mjs sync",
     "tauri": "tauri",
+    "pretauri:dev": "npm run version:sync",
     "tauri:dev": "tauri dev",
+    "pretauri:build": "npm run version:sync",
     "tauri:build": "tauri build",
-    "tauri:icon": "tauri icon src-tauri/app-icon.svg"
+    "tauri:icon": "tauri icon src-tauri/app-icon.svg",
+    "postversion": "npm run version:sync"
   },
   "dependencies": {
     "@tauri-apps/api": "^2.0.0",
