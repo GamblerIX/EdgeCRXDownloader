@@ -561,7 +561,7 @@ async function closeWindow() {
   }
 
   try {
-    await shellWindow.close()
+    await shellWindow.destroy()
   } catch {
     reportShellIssue('关闭命令执行失败。')
   }

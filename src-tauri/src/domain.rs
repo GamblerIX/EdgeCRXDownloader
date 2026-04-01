@@ -40,6 +40,7 @@ pub enum DownloadEvent {
   BatchStarted {
     total: usize,
   },
+  #[serde(rename_all = "camelCase")]
   ItemStarted {
     index: usize,
     total: usize,
@@ -47,6 +48,7 @@ pub enum DownloadEvent {
     extension_id: String,
     file_name: String,
   },
+  #[serde(rename_all = "camelCase")]
   ItemProgress {
     index: usize,
     total: usize,
@@ -54,6 +56,7 @@ pub enum DownloadEvent {
     downloaded_bytes: u64,
     total_bytes: Option<u64>,
   },
+  #[serde(rename_all = "camelCase")]
   ItemSucceeded {
     index: usize,
     total: usize,
@@ -62,6 +65,7 @@ pub enum DownloadEvent {
     file_path: String,
     bytes_written: u64,
   },
+  #[serde(rename_all = "camelCase")]
   ItemFailed {
     index: usize,
     total: usize,
