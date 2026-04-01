@@ -5,4 +5,3 @@ dist
 src-tauri/target
 *.log
 src-tauri/icons/icon.icns
-package-lock.json
