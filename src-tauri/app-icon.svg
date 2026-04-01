@@ -1,14 +1,32 @@
 <svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="512" height="512" rx="120" fill="#17140F"/>
-  <rect x="54" y="54" width="404" height="404" rx="96" fill="url(#paint0_linear_1_2)" stroke="#F2BE5C" stroke-width="12"/>
-  <path d="M160 184H312C352.869 184 386 217.131 386 258C386 298.869 352.869 332 312 332H244V394H160V184Z" fill="#17140F"/>
-  <path d="M242 244H308C315.732 244 322 250.268 322 258C322 265.732 315.732 272 308 272H242V244Z" fill="#F7F0DD"/>
-  <path d="M168 134L118 92" stroke="#8CA16B" stroke-width="20" stroke-linecap="round"/>
-  <path d="M344 394L392 434" stroke="#F2BE5C" stroke-width="20" stroke-linecap="round"/>
+  <rect width="512" height="512" rx="128" fill="url(#bg)"/>
+  <rect x="24" y="24" width="464" height="464" rx="104" stroke="url(#frame)" stroke-width="2" opacity="0.55"/>
+
+  <g filter="url(#tileShadow)">
+    <rect x="130" y="130" width="108" height="108" rx="4" fill="#F35325"/>
+    <rect x="274" y="130" width="108" height="108" rx="4" fill="#81BC06"/>
+    <rect x="130" y="274" width="108" height="108" rx="4" fill="#05A6F0"/>
+    <rect x="274" y="274" width="108" height="108" rx="4" fill="#FFBA08"/>
+  </g>
+
+  <ellipse cx="206" cy="156" rx="136" ry="62" fill="url(#gloss)" opacity="0.16"/>
+
   <defs>
-    <linearGradient id="paint0_linear_1_2" x1="92" y1="96" x2="430" y2="432" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#FF9C44"/>
-      <stop offset="1" stop-color="#8CA16B"/>
+    <linearGradient id="bg" x1="58" y1="42" x2="450" y2="470" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#101A2A"/>
+      <stop offset="0.58" stop-color="#15243A"/>
+      <stop offset="1" stop-color="#0C121D"/>
     </linearGradient>
+    <linearGradient id="frame" x1="42" y1="36" x2="468" y2="476" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF" stop-opacity="0.6"/>
+      <stop offset="1" stop-color="#A1B6CF" stop-opacity="0.08"/>
+    </linearGradient>
+    <linearGradient id="gloss" x1="104" y1="106" x2="270" y2="198" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="tileShadow" x="98" y="104" width="316" height="314" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="12" stdDeviation="14" flood-color="#000000" flood-opacity="0.22"/>
+    </filter>
   </defs>
 </svg>
