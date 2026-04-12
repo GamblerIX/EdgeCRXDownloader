@@ -1,4 +1,4 @@
-name: CD
+name: CD (Tauri)
 
 on:
   workflow_dispatch:
@@ -18,7 +18,7 @@ env:
 
 jobs:
   publish-windows-installer:
-    name: Publish Windows Installer
+    name: Publish Windows Installer (Tauri)
     runs-on: windows-latest
 
     steps:
@@ -33,6 +33,7 @@ jobs:
       - name: Read package version
         id: package_version
         shell: pwsh
+        working-directory: tauri
         run: Add-Content -Path $env:GITHUB_OUTPUT -Value "value=$(node scripts/version-tools.mjs print)"
 
       - name: Ensure git tag matches package version
@@ -45,6 +46,7 @@ jobs:
           }
 
       - name: Sync Cargo manifest version
+        working-directory: tauri
         run: npm run version:sync
 
       - name: Build and publish Tauri release
@@ -52,10 +54,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
+          projectPath: tauri
           tagName: v${{ steps.package_version.outputs.value }}
           releaseName: Edge CRX Downloader v${{ steps.package_version.outputs.value }}
           releaseBody: |
-            Windows NSIS installer for Edge CRX Downloader.
+            Windows NSIS installer for Edge CRX Downloader (Tauri version).
             Download the attached installer to install this release.
           releaseDraft: false
           prerelease: false

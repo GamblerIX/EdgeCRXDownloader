@@ -1,0 +1,3 @@
+PySide6>=6.5.0
+QFluentWidgets>=1.0.0
+aiohttp>=3.8.0
