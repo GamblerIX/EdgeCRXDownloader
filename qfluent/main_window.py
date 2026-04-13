@@ -8,10 +8,9 @@ from __future__ import annotations
 
 import os
 from datetime import datetime
-from pathlib import Path
 from typing import Optional
 
-from PySide6.QtCore import QThread, Signal, Slot, Qt
+from PySide6.QtCore import QThread, Signal, Slot
 from PySide6.QtWidgets import (
     QFileDialog,
     QHBoxLayout,
@@ -27,8 +26,6 @@ from qfluentwidgets import (
     CaptionLabel,
     CardWidget,
     FluentIcon,
-    InfoBar,
-    InfoBarPosition,
     LineEdit,
     PlainTextEdit,
     ProgressBar,
@@ -52,7 +49,6 @@ from core.extension import (
     DownloadInputPayload,
     extract_extension_id,
     format_bytes,
-    format_percent,
     parse_extension_inputs,
 )
 from core.error import get_user_facing_error

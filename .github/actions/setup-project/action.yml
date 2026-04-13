@@ -15,6 +15,7 @@ runs:
       with:
         node-version: lts/*
         cache: npm
+        cache-dependency-path: tauri/package-lock.json
 
     - name: Install Rust toolchain
       if: ${{ inputs.with-rust == 'true' }}
@@ -24,8 +25,9 @@ runs:
       if: ${{ inputs.with-rust == 'true' }}
       uses: swatinem/rust-cache@v2
       with:
-        workspaces: ./src-tauri -> target
+        workspaces: ./tauri/src-tauri -> target
 
     - name: Install frontend dependencies
       shell: pwsh
+      working-directory: tauri
       run: npm ci

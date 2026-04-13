@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-import pytest
-
 from core.extension import (
     extract_extension_id,
     format_bytes,
@@ -31,7 +29,10 @@ class TestExtractExtensionId:
         assert extract_extension_id(url) == "iikmkjmpaadaobahmlepeloendndfphd"
 
     def test_edge_store_url_with_query(self) -> None:
-        url = "https://microsoftedge.microsoft.com/addons/detail/edge-crx-downloader/iikmkjmpaadaobahmlepeloendndfphd?hl=zh-CN"
+        url = (
+            "https://microsoftedge.microsoft.com/addons/detail/"
+            "edge-crx-downloader/iikmkjmpaadaobahmlepeloendndfphd?hl=zh-CN"
+        )
         assert extract_extension_id(url) == "iikmkjmpaadaobahmlepeloendndfphd"
 
     def test_empty_returns_none(self) -> None:
