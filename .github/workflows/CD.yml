@@ -33,6 +33,7 @@ jobs:
       - name: Read package version
         id: package_version
         shell: pwsh
+        working-directory: tauri
         run: Add-Content -Path $env:GITHUB_OUTPUT -Value "value=$(node scripts/version-tools.mjs print)"
 
       - name: Ensure git tag matches package version
@@ -45,6 +46,7 @@ jobs:
           }
 
       - name: Sync Cargo manifest version
+        working-directory: tauri
         run: npm run version:sync
 
       - name: Build and publish Tauri release
@@ -52,6 +54,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
+          projectPath: tauri
           tagName: v${{ steps.package_version.outputs.value }}
           releaseName: Edge CRX Downloader v${{ steps.package_version.outputs.value }}
           releaseBody: |
@@ -59,3 +62,33 @@ jobs:
             Download the attached installer to install this release.
           releaseDraft: false
           prerelease: false
+
+  publish-pyinstaller-bundle:
+    name: Publish QFluent Portable Bundle
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        working-directory: qfluent
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt pyinstaller
+
+      - name: Build with PyInstaller
+        working-directory: qfluent
+        run: pyinstaller --onefile --windowed --name EdgeCRXDownloader main.py
+
+      - name: Upload QFluent bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: edge-crx-downloader-qfluent-windows
+          path: qfluent/dist/EdgeCRXDownloader.exe
+          if-no-files-found: warn

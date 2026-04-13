@@ -1,7 +1,20 @@
-node_modules
-.nuxt
-.output
-dist
-src-tauri/target
+# Tauri / Nuxt
+tauri/node_modules
+tauri/.nuxt
+tauri/.output
+tauri/dist
+tauri/src-tauri/target
+tauri/src-tauri/icons/icon.icns
+
+# QFluent / Python
+qfluent/__pycache__
+qfluent/**/__pycache__
+qfluent/.venv
+qfluent/venv
+qfluent/dist
+qfluent/build
+qfluent/*.spec
+qfluent/*.egg-info
+
+# General
 *.log
-src-tauri/icons/icon.icns
